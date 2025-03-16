@@ -377,7 +377,7 @@ public class TileConstants
 
 		return tile >= 0 && tile >= ROADBASE;
 	}
-
+/* Changed the value in this function to fix the flooding bug. Bug E */
 	static boolean isRiverEdge(int tile)
 	{
 		assert (tile & LOMASK) == tile;
