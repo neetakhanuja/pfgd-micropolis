@@ -9,7 +9,7 @@
 package micropolisj.engine;
 
 import static micropolisj.engine.TileConstants.*;
-import static micropolisj.engine.TrafficGen.ZoneType;
+import micropolisj.engine.TrafficGen.ZoneType;
 
 /**
  * Process individual tiles of the map for each cycle.
@@ -209,7 +209,7 @@ class MapScanner extends TileBehavior
 		boolean powerOn = checkZonePower();
 		city.fireStationCount++;
 		if ((city.cityTime % 8) == 0) {
-			repairZone(POLICESTATION, 3);
+			repairZone(FIRESTATION, 3);
 		}
 
 		int z;
