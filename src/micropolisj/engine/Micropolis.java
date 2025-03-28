@@ -13,6 +13,7 @@ import java.util.*;
 
 import static micropolisj.engine.TileConstants.*;
 
+
 /**
  * The main simulation engine for Micropolis.
  * The front-end should call animate() periodically
@@ -21,7 +22,7 @@ import static micropolisj.engine.TileConstants.*;
 public class Micropolis
 {
 	static final Random DEFAULT_PRNG = new Random();
-
+	public boolean firstTimePlayerMode = false;
 	Random PRNG;
 
 	// full size arrays
@@ -101,7 +102,14 @@ public class Micropolis
 	public boolean noDisasters = false;
 
 	public int gameLevel;
-
+	/* Add the firstimePlayermode */
+	/*public boolean isFirstTimePlayerMode() {
+		return this.firstTimePlayerMode;
+	}
+	
+	public void setFirstTimePlayerMode(boolean enabled) {
+		this.firstTimePlayerMode = enabled;
+	}*/
 	boolean autoGo;
 
 	// census numbers, reset in phase 0 of each cycle, summed during map scan
@@ -887,7 +895,7 @@ public class Micropolis
 			floodCnt--;
 		}
 
-		final int [] DisChance = { 480, 240, 60 };
+		final int [] DisChance = { 480, 240, 60, 800 };
 		if (noDisasters)
 			return;
 
@@ -1317,6 +1325,7 @@ public class Micropolis
 		case 0: temp = 1.2; break;
 		case 1: temp = 1.1; break;
 		case 2: temp = 0.98; break;
+		case 3: temp = 1.9; break;
 		}
 
 		double projectedIndPop = indPop * laborBase * temp;
@@ -1717,11 +1726,11 @@ public class Micropolis
 
 	/** Road/rail maintenance cost multiplier, for various difficulty settings.
 	 */
-	static final double [] RLevels = { 0.7, 0.9, 1.2 };
+	static final double [] RLevels = { 0.7, 0.9, 1.2, 0.5 };
 
 	/** Tax income multiplier, for various difficulty settings.
 	 */
-	static final double [] FLevels = { 1.4, 1.2, 0.8 };
+	static final double [] FLevels = { 1.4, 1.2, 0.8, 2.2 };
 
 	void collectTaxPartial()
 	{
@@ -1976,7 +1985,7 @@ public class Micropolis
 
 		if (cityTime < 0) { cityTime = 0; }
 		if (cityTax < 0 || cityTax > 20) { cityTax = 7; }
-		if (gameLevel < 0 || gameLevel > 2) { gameLevel = 0; }
+		if (gameLevel < 0 || gameLevel > 3) { gameLevel = 0; }
 		if (evaluation.cityClass < 0 || evaluation.cityClass > 5) { evaluation.cityClass = 0; }
 		if (evaluation.cityScore < 1 || evaluation.cityScore > 999) { evaluation.cityScore = 500; }
 

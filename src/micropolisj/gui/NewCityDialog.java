@@ -57,20 +57,22 @@ public class NewCityDialog extends JDialog
 
 		levelBox.add(Box.createVerticalGlue());
 		JRadioButton radioBtn;
-		for (int lev = GameLevel.MIN_LEVEL; lev <= GameLevel.MAX_LEVEL; lev++)
+		final int[] ordering = {3,0,1,2};
+		for (int lev = 0; lev < 4; lev++)
 		{
-			final int x = lev;
-			radioBtn = new JRadioButton(strings.getString("menu.difficulty."+lev));
+			final int x = ordering[lev];
+			radioBtn = new JRadioButton(strings.getString("menu.difficulty."+x));
 			radioBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					setGameLevel(x);
+					System.out.println("Selected level is"+ x);
 				}});
 			levelBox.add(radioBtn);
-			levelBtns.put(lev, radioBtn);
+			levelBtns.put(x, radioBtn);
 		}
 		levelBox.add(Box.createVerticalGlue());
 		setGameLevel(GameLevel.MIN_LEVEL);
-
+		System.out.println("Default level is"+GameLevel.MIN_LEVEL);
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
