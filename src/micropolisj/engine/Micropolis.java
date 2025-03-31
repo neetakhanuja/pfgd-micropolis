@@ -1363,7 +1363,12 @@ public class Micropolis
 		if (indRatio > 2.0)
 			indRatio = 2.0;
 
-		int z2 = taxEffect + gameLevel;
+
+		int z2 = taxEffect + gameLevel; 
+		if (gameLevel==3) // Note: This should overwrite the z2 value to 4 if the player is in the first-time mode.
+		{
+			z2 = 4;
+		}
 		if (z2 > 20)
 			z2 = 20;
 
@@ -2520,22 +2525,30 @@ public class Micropolis
 			lastCityPop = newPop;
 		}
 	}
-
+	
+	boolean onboarding = false;
 	void doMessages()
 	{
 		//MORE (scenario stuff)
-
+		//obboarding message
+		
+		if(onboarding == false && gameLevel == 3) {
+			sendMessage(MicropolisMessage.FIRSTTIME_WELCOME); //This is for the onboarding recommendations for Firsttime players
+			onboarding = true;
+			}
 		checkGrowth();
 
 		int totalZoneCount = resZoneCount + comZoneCount + indZoneCount;
 		int powerCount = nuclearCount + coalCount;
+		int maxpopforfirsttimeplay = 15000; //When the first time player crosses 15k they graduate to the easy level
 
-		int z = cityTime % 64;
+		int z = cityTime % 69;
 		switch (z) {
-		case 1:
+		case 1: 
 			if (totalZoneCount / 4 >= resZoneCount) {
 				sendMessage(MicropolisMessage.NEED_RES);
-			}
+			}	
+			CheckforFirstTimeGrad(maxpopforfirsttimeplay);
 			break;
 		case 5:
 			if (totalZoneCount / 8 >= comZoneCount) {
@@ -2556,6 +2569,7 @@ public class Micropolis
 			if (totalZoneCount > 50 && totalZoneCount > railTotal) {
 				sendMessage(MicropolisMessage.NEED_RAILS);
 			}
+			CheckforFirstTimeGrad(maxpopforfirsttimeplay);
 			break;
 		case 22:
 			if (totalZoneCount > 10 && powerCount == 0) {
@@ -2579,6 +2593,7 @@ public class Micropolis
 			if (comCap) {
 				sendMessage(MicropolisMessage.NEED_AIRPORT);
 			}
+			CheckforFirstTimeGrad(maxpopforfirsttimeplay);
 			break;
 		case 32:
 			int TM = unpoweredZoneCount + poweredZoneCount;
@@ -2612,6 +2627,7 @@ public class Micropolis
 			if (cityTax > 12) {
 				sendMessage(MicropolisMessage.HIGH_TAXES);
 			}
+			CheckforFirstTimeGrad(maxpopforfirsttimeplay);
 			break;
 		case 54:
 			if (roadEffect < 20 && roadTotal > 30) {
@@ -2633,8 +2649,20 @@ public class Micropolis
 				sendMessage(MicropolisMessage.HIGH_TRAFFIC);
 			}
 			break;
+		case 66: //This is the case to check the population rise to 15k which will switch from first-player mode to easy mode.
+				CheckforFirstTimeGrad(maxpopforfirsttimeplay);
+			break;
+			
 		default:
 			//nothing
+		}
+	}
+
+	private void CheckforFirstTimeGrad(int maxpopforfirsttimeplay) {
+		if(lastCityPop > maxpopforfirsttimeplay && gameLevel == 3) {
+		sendMessage(MicropolisMessage.FIRSTTIME_GRADUATE);
+		setGameLevel(0);
+		System.out.println("Changed gamelevel"+gameLevel);
 		}
 	}
 
@@ -2700,7 +2728,7 @@ public class Micropolis
 	public void setGameLevel(int newLevel)
 	{
 		assert GameLevel.isValid(newLevel);
-
+//This function gets called to transition from first time to easy
 		gameLevel = newLevel;
 		fireOptionsChanged();
 	}
