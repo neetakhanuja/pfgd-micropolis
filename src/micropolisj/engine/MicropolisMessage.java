@@ -58,7 +58,9 @@ public enum MicropolisMessage
 	FLOOD_REPORT,
 	MELTDOWN_REPORT,        // 43            doMeltdown
 	RIOTING_REPORT,
-
+	FIRSTTIME_GRADUATE,    // Message to transition player from first-time mode to easy mode
+	FIRSTTIME_CONTINUE,    // Informing the player that we are still in the first-time player mode
+	FIRSTTIME_WELCOME,     // Onboarding and welcoming the player to the first-time player mode
 	// added by Jason
 	NO_NUCLEAR_PLANTS;
 

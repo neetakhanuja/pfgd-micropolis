@@ -199,8 +199,11 @@ public class NewCityDialog extends JDialog
 
 	private void onPlayClicked()
 	{
-		engine.setGameLevel(getSelectedGameLevel());
+		engine.setGameLevel(getSelectedGameLevel()); // pass the value 0 in this function for transition
 		engine.setFunds(GameLevel.getStartingFunds(engine.gameLevel));
+		if(engine.gameLevel ==3)
+		{engine.toggleDisasters();
+		}
 		startPlaying(engine, null);
 	}
 
