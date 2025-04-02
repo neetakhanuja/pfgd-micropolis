@@ -22,7 +22,7 @@ import static micropolisj.engine.TileConstants.*;
 public class Micropolis
 {
 	static final Random DEFAULT_PRNG = new Random();
-	public boolean firstTimePlayerMode = false;
+	public boolean firstTimePlayerMode = false; // Flag to detect the Gamelevel as first-time player mode
 	Random PRNG;
 
 	// full size arrays
@@ -99,17 +99,10 @@ public class Micropolis
 	public boolean autoBulldoze = true;
 	public boolean autoBudget = false;
 	public Speed simSpeed = Speed.NORMAL;
-	public boolean noDisasters = false;
+	public boolean noDisasters = false; 
 
 	public int gameLevel;
-	/* Add the firstimePlayermode */
-	/*public boolean isFirstTimePlayerMode() {
-		return this.firstTimePlayerMode;
-	}
 	
-	public void setFirstTimePlayerMode(boolean enabled) {
-		this.firstTimePlayerMode = enabled;
-	}*/
 	boolean autoGo;
 
 	// census numbers, reset in phase 0 of each cycle, summed during map scan
@@ -1731,11 +1724,11 @@ public class Micropolis
 
 	/** Road/rail maintenance cost multiplier, for various difficulty settings.
 	 */
-	static final double [] RLevels = { 0.7, 0.9, 1.2, 0.5 };
+	static final double [] RLevels = { 0.7, 0.9, 1.2, 0.5 }; //Added Flevel value as 0.5 for first-time player mode
 
 	/** Tax income multiplier, for various difficulty settings.
 	 */
-	static final double [] FLevels = { 1.4, 1.2, 0.8, 2.2 };
+	static final double [] FLevels = { 1.4, 1.2, 0.8, 2.2 }; //Added Flevel value as 2.2 for first-time player mode
 
 	void collectTaxPartial()
 	{
@@ -2548,7 +2541,7 @@ public class Micropolis
 			if (totalZoneCount / 4 >= resZoneCount) {
 				sendMessage(MicropolisMessage.NEED_RES);
 			}	
-			CheckforFirstTimeGrad(maxpopforfirsttimeplay);
+			CheckforFirstTimeGrad(maxpopforfirsttimeplay); //Check for graduation
 			break;
 		case 5:
 			if (totalZoneCount / 8 >= comZoneCount) {
@@ -2569,7 +2562,7 @@ public class Micropolis
 			if (totalZoneCount > 50 && totalZoneCount > railTotal) {
 				sendMessage(MicropolisMessage.NEED_RAILS);
 			}
-			CheckforFirstTimeGrad(maxpopforfirsttimeplay);
+			CheckforFirstTimeGrad(maxpopforfirsttimeplay); //Check for graduation
 			break;
 		case 22:
 			if (totalZoneCount > 10 && powerCount == 0) {
@@ -2593,7 +2586,7 @@ public class Micropolis
 			if (comCap) {
 				sendMessage(MicropolisMessage.NEED_AIRPORT);
 			}
-			CheckforFirstTimeGrad(maxpopforfirsttimeplay);
+			CheckforFirstTimeGrad(maxpopforfirsttimeplay); //Check for graduation
 			break;
 		case 32:
 			int TM = unpoweredZoneCount + poweredZoneCount;
@@ -2627,7 +2620,7 @@ public class Micropolis
 			if (cityTax > 12) {
 				sendMessage(MicropolisMessage.HIGH_TAXES);
 			}
-			CheckforFirstTimeGrad(maxpopforfirsttimeplay);
+			CheckforFirstTimeGrad(maxpopforfirsttimeplay); //Check for graduation
 			break;
 		case 54:
 			if (roadEffect < 20 && roadTotal > 30) {
@@ -2650,14 +2643,14 @@ public class Micropolis
 			}
 			break;
 		case 66: //This is the case to check the population rise to 15k which will switch from first-player mode to easy mode.
-				CheckforFirstTimeGrad(maxpopforfirsttimeplay);
+				CheckforFirstTimeGrad(maxpopforfirsttimeplay); //Check for graduation
 			break;
 			
 		default:
 			//nothing
 		}
 	}
-
+    // Trigger graduation from First-Time to Easy at 15k population
 	private void CheckforFirstTimeGrad(int maxpopforfirsttimeplay) {
 		if(lastCityPop > maxpopforfirsttimeplay && gameLevel == 3) {
 		sendMessage(MicropolisMessage.FIRSTTIME_GRADUATE);

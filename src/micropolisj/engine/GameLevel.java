@@ -12,7 +12,7 @@ public class GameLevel
 {
 	/*level 3 is for first-time players */
 	public static final int MIN_LEVEL = 0;
-	public static final int MAX_LEVEL = 3;
+	public static final int MAX_LEVEL = 3; // Added First-Time mode as level 3 (for onboarding experience)
 
 	public static boolean isValid(int lev)
 	{

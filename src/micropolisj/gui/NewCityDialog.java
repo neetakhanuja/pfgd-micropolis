@@ -57,7 +57,7 @@ public class NewCityDialog extends JDialog
 
 		levelBox.add(Box.createVerticalGlue());
 		JRadioButton radioBtn;
-		final int[] ordering = {3,0,1,2};
+		final int[] ordering = {3,0,1,2}; // Added First-Time mode radio button for new players. Creating custom ordering to fit the first time player mode as 3
 		for (int lev = 0; lev < 4; lev++)
 		{
 			final int x = ordering[lev];
@@ -202,7 +202,7 @@ public class NewCityDialog extends JDialog
 		engine.setGameLevel(getSelectedGameLevel()); // pass the value 0 in this function for transition
 		engine.setFunds(GameLevel.getStartingFunds(engine.gameLevel));
 		if(engine.gameLevel ==3)
-		{engine.toggleDisasters();
+		{engine.toggleDisasters(); //Disasters turned off for first-time player mode.
 		}
 		startPlaying(engine, null);
 	}
